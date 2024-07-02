@@ -1,0 +1,148 @@
+{
+    "term": "2023/24-L",
+    "courses": [
+        {
+            "id": "SWF000-S03252C",
+            "blacklistedGroups": {
+                "Lecture": [
+                    1,
+                    2,
+                    3
+                ],
+                "Classes": [],
+                "Laboratory": [
+                    1
+                ],
+                "Project": [],
+                "Seminar": [
+                    0,
+                    3
+                ]
+            }
+        },
+        {
+            "id": "W04IST-SI0009G",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "W04IST-SI0008G",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "W08ZZZ-SM0142G",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": [
+                    1
+                ]
+            }
+        },
+        {
+            "id": "W04IST-SI0009L",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [
+                    2,
+                    69,
+                    1,
+                    0
+                ],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SWF000-S03242C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SWF000-S03074C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SWF000-S04031C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SJO000-SI0041C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SJO000-SI0006C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SWF000-S05042C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        },
+        {
+            "id": "SJO000-SI0040C",
+            "blacklistedGroups": {
+                "Lecture": [],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": []
+            }
+        }
+    ],
+    "travelTimes": [
+        {
+            "time": 40,
+            "hourStart": 0,
+            "hourEnd": 24
+        }
+    ]
+}
