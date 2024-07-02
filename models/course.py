@@ -1,4 +1,4 @@
-from utils.meeting import Meeting
+from models.meeting import Meeting
 
 class Course:
 

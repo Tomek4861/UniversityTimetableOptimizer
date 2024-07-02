@@ -1,5 +1,5 @@
 from PyQt6.QtCore import Qt, QTime, QDate, QDateTime
-from PyQt6.QtGui import QColor, QFont
+from PyQt6.QtGui import QColor
 from PyQt6.QtWidgets import (
     QMainWindow, QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget, QMessageBox, QPushButton, QLabel,
     QHBoxLayout

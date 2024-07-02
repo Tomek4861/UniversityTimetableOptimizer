@@ -3,7 +3,7 @@ from typing import Any
 import requests
 
 from config.config_manager import ConfigManager
-from utils.course import Course
+from models.course import Course
 
 
 class Scraper:

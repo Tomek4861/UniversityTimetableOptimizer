@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any
 
 from config.config_manager import ConfigManager
-from utils.meeting import Meeting
+from models.meeting import Meeting
 
 
 class TimeTable:
