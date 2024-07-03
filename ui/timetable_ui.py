@@ -12,15 +12,16 @@ from models.timetable import TimeTable
 class TimetableApp(QMainWindow):
     def __init__(self, timetable_object: TimeTable, final_fitness: float, window_id:int):
         super().__init__()
-        self.current_week_start = QDateTime.currentDateTime()
-        self.current_week_end = QDateTime.currentDateTime()
-        self.timetable_manager = timetable_object
+        self.timetable: QTableWidget = QTableWidget()
+        self.current_week_start: QDateTime = QDateTime.currentDateTime()
+        self.current_week_end: QDateTime = QDateTime.currentDateTime()
+        self.timetable_manager: TimeTable = timetable_object
         self.setWindowTitle(f"Timetable {window_id} - Fitness: {final_fitness}")
         self.setWindowIcon(qta.icon('fa.calendar'))
 
-        self.setGeometry(100, 100, 770, 770)
-        self.setMaximumWidth(760)
-        self.colors = [
+        self.setGeometry(100, 100, 790, 770)
+        self.setMaximumWidth(790)
+        self.colors: list[QColor] = [
             QColor(200, 200, 255),
             QColor(255, 200, 200),
             QColor(200, 255, 200),
@@ -37,16 +38,16 @@ class TimetableApp(QMainWindow):
             QColor(200, 220, 255),
             QColor(220, 255, 200)
         ]
-        self.course_colors = {}
+        self.course_colors: dict[str, QColor] = {}
 
-        self.data_meetings_dict = self.timetable_manager.to_ui_format()
+        self.data_meetings_dict: list[dict[str,any]] = self.timetable_manager.to_ui_format()
 
         self.current_week_offset = 0
         self.initialize_timetable()
 
-        self.layout = QVBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
 
-        self.date_label = QLabel()
+        self.date_label: QLabel = QLabel()
         self.set_week_start_end()
         self.update_date_label()
         self.date_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -58,10 +59,10 @@ class TimetableApp(QMainWindow):
         self.layout.addWidget(self.date_label)
         self.layout.addWidget(self.timetable)
 
-        self.prev_week_button = QPushButton("Week back")
+        self.prev_week_button: QPushButton = QPushButton("Week back")
         self.prev_week_button.setIcon(qta.icon('fa.arrow-left', color='white'))
 
-        self.next_week_button = QPushButton("Week forward")
+        self.next_week_button: QPushButton = QPushButton("Week forward")
         self.next_week_button.setIcon(qta.icon('fa.arrow-right', color='white'))
         self.next_week_button.setLayoutDirection(Qt.LayoutDirection.RightToLeft) # icon on the right
         self.prev_week_button.setDisabled(True)
@@ -75,7 +76,7 @@ class TimetableApp(QMainWindow):
 
         self.layout.addLayout(button_layout)
 
-        self.save_screenshot_button = QPushButton("Save Screenshot")
+        self.save_screenshot_button: QPushButton = QPushButton("Save Screenshot")
         self.save_screenshot_button.setIcon(qta.icon('fa.save', color='white'))
 
         self.save_screenshot_button.clicked.connect(self.save_screenshot)
@@ -89,20 +90,19 @@ class TimetableApp(QMainWindow):
 
         self.timetable.cellDoubleClicked.connect(self.show_details)
 
-    def initialize_timetable(self):
+    def initialize_timetable(self) -> None:
 
-        self.timetable = QTableWidget()
         self.timetable.setColumnCount(7)
         self.timetable.setHorizontalHeaderLabels(
             ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
 
         self.timetable.setWordWrap(True)
-        self.timetable.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        # self.timetable.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.timetable.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.update_timetable()
 
-    def get_stylesheet(self):
+    def get_stylesheet(self) -> str:
         return """
         QMainWindow {
             background-color: #f0f0f0;
@@ -140,7 +140,7 @@ class TimetableApp(QMainWindow):
         }
         """
 
-    def get_time_range(self):
+    def get_time_range(self) -> tuple[str, str]:
         min_time = QTime.fromString("23:59", "HH:mm")
         max_time = QTime.fromString("00:00", "HH:mm")
         for week_day, meeting_list in self.data_meetings_dict[self.current_week_offset]['week_meetings'].items():
@@ -157,7 +157,7 @@ class TimetableApp(QMainWindow):
         max_time = max_time.addSecs(60 * 60)
         return min_time.toString("HH:mm"), max_time.toString("HH:mm")
 
-    def generate_time_intervals(self, start_time, end_time, interval_minutes):
+    def generate_time_intervals(self, start_time, end_time, interval_minutes) -> list[str]:
         time_format = "HH:mm"
         start = QTime.fromString(start_time, time_format)
         end = QTime.fromString(end_time, time_format)
@@ -169,7 +169,7 @@ class TimetableApp(QMainWindow):
             start = start.addSecs(interval_minutes * 60)
         return times
 
-    def set_custom_vertical_headers(self):
+    def set_custom_vertical_headers(self) -> None:
         headers = []
         for i, time in enumerate(self.time_intervals_30):
             if i % 2 == 0:
@@ -178,7 +178,7 @@ class TimetableApp(QMainWindow):
                 headers.append("")
         self.timetable.setVerticalHeaderLabels(headers)
 
-    def time_to_row(self, time_str):
+    def time_to_row(self, time_str) -> int:
 
         # transforms time in HH:MM format to corresponding row index
         time_format = "HH:mm"
@@ -191,13 +191,13 @@ class TimetableApp(QMainWindow):
                 return i if i == 0 else i - 1
         return len(self.time_intervals_30) - 1
 
-    def clear_spans(self):
+    def clear_spans(self) -> None:
         for row in range(self.timetable.rowCount()):
             for column in range(self.timetable.columnCount()):
                 if self.timetable.columnSpan(row, column) > 1 or self.timetable.rowSpan(row, column) > 1:
                     self.timetable.setSpan(row, column, 1, 1)
 
-    def populate_timetable(self):
+    def populate_timetable(self) -> None:
         # Clear existing items and spans
         self.timetable.clearContents()
         self.clear_spans()
@@ -229,7 +229,7 @@ class TimetableApp(QMainWindow):
                     item.setFlags(Qt.ItemFlag.NoItemFlags)
                     self.timetable.setItem(row, column, item)
 
-    def update_timetable(self):
+    def update_timetable(self) -> None:
 
         start_time, end_time = self.get_time_range()
         self.time_intervals_30 = self.generate_time_intervals(start_time, end_time, 30)
@@ -239,7 +239,7 @@ class TimetableApp(QMainWindow):
 
         self.populate_timetable()
 
-    def show_details(self, row, column):
+    def show_details(self, row, column) -> None:
         item = self.timetable.item(row, column)
         if item:
             subject = item.text()
@@ -247,17 +247,17 @@ class TimetableApp(QMainWindow):
             details = item.data(Qt.ItemDataRole.UserRole)
             QMessageBox.information(self, subject, details.to_ui_string())
 
-    def set_week_start_end(self):
+    def set_week_start_end(self) -> None:
         start_of_week = self.data_meetings_dict[self.current_week_offset]['week_start']
         end_of_week = self.data_meetings_dict[self.current_week_offset]['week_end']
         self.current_week_start = QDate(start_of_week)
         self.current_week_end = QDate(end_of_week)
 
-    def update_date_label(self):
+    def update_date_label(self) -> None:
         self.date_label.setText(
             f"Timetable from {self.current_week_start.toString('dd MMM yyyy')} to {self.current_week_end.toString('dd MMM yyyy')}")
 
-    def previous_week(self):
+    def previous_week(self) -> None:
         self.current_week_offset -= 1
         self.set_week_start_end()
 
@@ -268,7 +268,7 @@ class TimetableApp(QMainWindow):
 
         self.next_week_button.setDisabled(False)
 
-    def next_week(self):
+    def next_week(self) -> None:
         # print(self.current_week_offset, max(self.data_meetings_dict.keys()))
         self.current_week_offset += 1
         self.set_week_start_end()
@@ -279,11 +279,11 @@ class TimetableApp(QMainWindow):
 
         self.prev_week_button.setDisabled(False)
 
-    def activate_main_window(self):
+    def activate_main_window(self) -> None:
         self.raise_()
         self.activateWindow()
 
-    def save_screenshot(self):
+    def save_screenshot(self) -> None:
         pixmap = self.timetable.grab()
         cat_name = self.timetable_manager.get_catalog_name()
         start_of_week_str = self.current_week_start.toString('dd_MM_yyyy')

@@ -1,20 +1,22 @@
-from utils.scraper import Scraper
-from config.config_manager import ConfigManager
-from models.timetable import TimeTable
 import math
+
+from config.config_manager import ConfigManager
+from models.course import Course
+from models.timetable import TimeTable
+from utils.scraper import Scraper
 
 
 class CourseManager:
     def __init__(self):
-        self.scraper = Scraper()
-        self.config = ConfigManager()
-        self.courses = []
-        self.course_groups_dict = {}
+        self.scraper: Scraper = Scraper()
+        self.config: ConfigManager = ConfigManager()
+        self.courses: list[Course] = []
+        self.course_groups_dict: dict[str, list[int]] = {}
         self.load_courses()
-        self.fitness_cache = {}
-        self.cache_hits = 0
+        self.fitness_cache: dict[tuple, float] = {}
+        self.cache_hits: int = 0
 
-    def load_courses(self):
+    def load_courses(self) -> None:
 
         for course_id in self.config.get_all_courses():
             self.courses.extend(self.scraper.get_course_info(course_id))
@@ -40,7 +42,7 @@ class CourseManager:
             if group_id not in course.get_group_ids():
                 raise ValueError(f"Invalid group id {group_id} for course {course.name} {course.main_id}")
 
-    def rate_solution(self, solution: list[int]):
+    def rate_solution(self, solution: list[int]) -> float:
         solution_tuple = tuple(solution)
         if solution_tuple in self.fitness_cache:
             self.cache_hits += 1
@@ -62,7 +64,7 @@ class CourseManager:
         self.fitness_cache[solution_tuple] = fitness
         return fitness
 
-    def get_plan_from_solution(self, solution: list[int]):
+    def get_plan_from_solution(self, solution: list[int]) -> TimeTable:
         self.validate_solution(solution)
         timetable = TimeTable()
         for course, group_id in zip(self.courses, solution):
@@ -71,12 +73,12 @@ class CourseManager:
         timetable.sort_meetings()
         return timetable
 
-    def get_classes_group_dict_from_solution(self, solution: list[int]):
+    def get_classes_group_dict_from_solution(self, solution: list[int]) -> dict[tuple[str, str, str], int]:
         self.validate_solution(solution)
         classes_group_dict = {}
         for course, group_id in zip(self.courses, solution):
             classes_group_dict[(course.name, course.raw_id, course.type)] = group_id
         return classes_group_dict
 
-    def calculate_possible_solutions(self):
+    def calculate_possible_solutions(self) -> int:
         return math.prod([len(course.get_group_ids()) for course in self.courses])

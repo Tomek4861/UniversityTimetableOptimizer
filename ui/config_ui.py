@@ -1,5 +1,5 @@
 from multiprocessing import Process
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication  # needed for qtawesome
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import (
@@ -15,8 +15,8 @@ from utils.scraper import Scraper
 class ConfigApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.config_manager = ConfigManager()
-        self.scraper = Scraper()
+        self.config_manager: ConfigManager = ConfigManager()
+        self.scraper: Scraper = Scraper()
         self.setWindowTitle("Timetable Optimizer")
         self.setWindowIcon(qta.icon('fa.cogs'))
         self.setGeometry(100, 100, 1150, 800)
@@ -24,38 +24,38 @@ class ConfigApp(QMainWindow):
 
         valid_semesters = self.scraper.get_valid_semesters()
 
-        self.semester_combo_box = QComboBox()
+        self.semester_combo_box: QComboBox = QComboBox()
         self.semester_combo_box.addItems(valid_semesters.keys())
         self.semester_combo_box.setCurrentText(self.config_manager.get_term())
         self.semester_combo_box.currentTextChanged.connect(self.set_new_semester_with_warning)
-        self.semester_layout = QHBoxLayout()
+        self.semester_layout: QHBoxLayout = QHBoxLayout()
         self.semester_layout.addWidget(QLabel("Select Semester:"))
         self.semester_layout.addWidget(self.semester_combo_box)
 
-        self.layout = QVBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
         self.layout.addLayout(self.semester_layout)
 
-        self.course_table = QTableWidget()
+        self.course_table: QTableWidget = QTableWidget()
         self.course_table.setColumnCount(3)
         self.course_table.setHorizontalHeaderLabels(["Course ID", "Course Name", "Actions"])
         self.course_table.horizontalHeader().setStretchLastSection(True)
         self.layout.addWidget(self.course_table)
 
         button_layout = QHBoxLayout()
-        self.add_course_button = QPushButton("Add Course")
+        self.add_course_button: QPushButton = QPushButton("Add Course")
         self.add_course_button.setIcon(qta.icon('fa.plus', color='white'))
 
         self.add_course_button.clicked.connect(self.add_course_dialog)
         button_layout.addWidget(self.add_course_button)
 
-        self.edit_travel_time_button = QPushButton("Edit Travel Time")
+        self.edit_travel_time_button: QPushButton = QPushButton("Edit Travel Time")
         self.edit_travel_time_button.setIcon(qta.icon('fa.clock-o', color='white'))
         self.edit_travel_time_button.clicked.connect(self.edit_travel_time_dialog)
         button_layout.addWidget(self.edit_travel_time_button)
 
         self.layout.addLayout(button_layout)
 
-        self.create_plan_button = QPushButton("Create Plan")
+        self.create_plan_button: QPushButton = QPushButton("Create Plan")
         self.create_plan_button.setIcon(qta.icon('fa.calendar-check-o', color='white'))
         self.create_plan_button.clicked.connect(self.create_plan)
         self.layout.addSpacing(20)
@@ -69,7 +69,7 @@ class ConfigApp(QMainWindow):
 
         self.setStyleSheet(self.get_stylesheet())
 
-    def get_stylesheet(self):
+    def get_stylesheet(self) -> str:
         return """
         QMainWindow {
             background-color: #f0f0f0;
@@ -132,7 +132,7 @@ class ConfigApp(QMainWindow):
 
         """
 
-    def update_course_table(self):
+    def update_course_table(self) -> None:
         self.course_table.setRowCount(0)
         courses = self.config_manager.get_all_courses()
 
@@ -177,7 +177,7 @@ class ConfigApp(QMainWindow):
         self.course_table.resizeColumnsToContents()
         self.course_table.setColumnWidth(2, 200)
 
-    def get_button_stylesheet(self):
+    def get_button_stylesheet(self) -> str:
         return """
         QPushButton {
             background-color: #4CAF50;
@@ -193,29 +193,29 @@ class ConfigApp(QMainWindow):
         }
         """
 
-    def add_course_dialog(self):
+    def add_course_dialog(self) -> None:
         dialog = AddEditCourseDialog(self)
         dialog.exec()
 
-    def edit_course_dialog(self, course_id):
+    def edit_course_dialog(self, course_id) -> None:
         dialog = AddEditCourseDialog(self, course_id)
         dialog.exec()
 
-    def delete_course(self, course_id):
+    def delete_course(self, course_id) -> None:
         self.config_manager.remove_course(course_id)
         self.update_course_table()
 
-    def edit_travel_time_dialog(self):
+    def edit_travel_time_dialog(self) -> None:
         dialog = TravelTimeManagerDialog(self)
         dialog.exec()
 
-    def set_new_semester_with_warning(self, semester):
+    def set_new_semester_with_warning(self, semester) -> None:
         if self.config_manager.get_term() != semester:
             self.config_manager.set_term(semester)
             QMessageBox.warning(self, "Warning", "Semester changed, make sure that all courses are still valid")
             self.update_course_table()
 
-    def create_plan(self):
+    def create_plan(self) -> None:
 
         if not self.config_manager.get_all_courses():
             QMessageBox.warning(self, "Error", "Add at least one course to create a plan")
@@ -233,26 +233,26 @@ class AddEditCourseDialog(QDialog):
     def __init__(self, parent: ConfigApp, course_id=None):
         super().__init__(parent)
         self.parent: ConfigApp = parent
-        self.course_id = course_id
+        self.course_id: Optional[str] = course_id
         self.setWindowTitle("Add/Edit Course")
         self.setWindowIcon(qta.icon('fa.edit'))
         self.setGeometry(150, 150, 400, 300)
 
-        self.layout = QVBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
 
-        self.course_id_label = QLabel("Course ID:")
-        self.course_id_input = QLineEdit()
+        self.course_id_label: QLabel = QLabel("Course ID:")
+        self.course_id_input: QLineEdit = QLineEdit()
         self.course_id_input.setStyleSheet(self.get_lineedit_stylesheet())
         self.layout.addWidget(self.course_id_label)
         self.layout.addWidget(self.course_id_input)
 
-        self.blacklisted_groups_layout = QVBoxLayout()
-        self.blacklisted_groups_label = QLabel("Disabled Groups:")
+        self.blacklisted_groups_layout: QVBoxLayout = QVBoxLayout()
+        self.blacklisted_groups_label: QLabel = QLabel("Disabled Groups:")
         instructions_label = QLabel("Enter classes group numbers separated by commas")
 
         self.blacklisted_groups_layout.addWidget(self.blacklisted_groups_label)
         self.blacklisted_groups_layout.addWidget(instructions_label)
-        self.blacklisted_groups = {
+        self.blacklisted_groups: dict[str, QLineEdit] = {
             "Lecture": QLineEdit(),
             "Classes": QLineEdit(),
             "Laboratory": QLineEdit(),
@@ -267,7 +267,7 @@ class AddEditCourseDialog(QDialog):
             self.blacklisted_groups_layout.addLayout(horizontal_layout)
         self.layout.addLayout(self.blacklisted_groups_layout)
 
-        self.save_button = QPushButton("Save")
+        self.save_button: QPushButton = QPushButton("Save")
         self.save_button.setIcon(qta.icon('fa.save', color='white'))
         self.save_button.setStyleSheet(self.get_button_stylesheet())
         self.save_button.clicked.connect(self.save_course)
@@ -278,7 +278,7 @@ class AddEditCourseDialog(QDialog):
         if self.course_id:
             self.load_course()
 
-    def get_lineedit_stylesheet(self):
+    def get_lineedit_stylesheet(self) -> str:
         return """
         QLineEdit {
             background-color: white; 
@@ -289,7 +289,7 @@ class AddEditCourseDialog(QDialog):
         }
         """
 
-    def get_button_stylesheet(self):
+    def get_button_stylesheet(self) -> str:
         return """
         QPushButton {
             background-color: #4CAF50;
@@ -309,14 +309,14 @@ class AddEditCourseDialog(QDialog):
         }
         """
 
-    def load_course(self):
+    def load_course(self) -> None:
         self.course_id_input.setText(self.course_id)
         self.course_id_input.setDisabled(True)
         blacklisted_groups = self.parent.config_manager.get_blacklisted_groups_for_course(self.course_id)
         for key, widget in self.blacklisted_groups.items():
             widget.setText(','.join(map(str, blacklisted_groups[key])))
 
-    def save_course(self):
+    def save_course(self) -> None:
         course_id = self.course_id_input.text().strip().upper()
         if not course_id:
             QMessageBox.warning(self, "Error", "Course ID cannot be empty")
@@ -337,7 +337,7 @@ class AddEditCourseDialog(QDialog):
         self.parent.update_course_table()
         self.accept()
 
-    def get_course_name_and_validate(self, course_id):
+    def get_course_name_and_validate(self, course_id) -> str:
         course_id = course_id.upper()
         return self.parent.scraper.get_course_name_and_validate(course_id)
 
@@ -350,20 +350,20 @@ class TravelTimeManagerDialog(QDialog):
         self.setWindowIcon(qta.icon('fa.clock-o'))
         self.setGeometry(200, 200, 800, 600)
 
-        self.layout = QVBoxLayout()
-        self.times_table = QTableWidget()
+        self.layout: QVBoxLayout = QVBoxLayout()
+        self.times_table: QTableWidget = QTableWidget()
         self.times_table.setColumnCount(3)
         self.times_table.setHorizontalHeaderLabels(["Hours range", "Time (minutes)", "Actions"])
         self.times_table.horizontalHeader().setStretchLastSection(True)
         self.layout.addWidget(self.times_table)
 
         button_layout = QHBoxLayout()
-        self.add_interval_button = QPushButton("Add Time Interval")
+        self.add_interval_button: QPushButton = QPushButton("Add Time Interval")
         self.add_interval_button.setIcon(qta.icon('fa.plus', color='white'))
         self.add_interval_button.clicked.connect(self.add_time_interval)
         button_layout.addWidget(self.add_interval_button)
 
-        self.save_times_button = QPushButton("Close and Save")
+        self.save_times_button: QPushButton = QPushButton("Close and Save")
         self.save_times_button.setIcon(qta.icon('fa.save', color='white'))
         self.save_times_button.clicked.connect(self.save_times)
         button_layout.addWidget(self.save_times_button)
@@ -373,7 +373,7 @@ class TravelTimeManagerDialog(QDialog):
 
         self.setLayout(self.layout)
 
-    def update_times_table(self):
+    def update_times_table(self) -> None:
         self.times_table.setRowCount(0)
         travel_times = self.parent.config_manager.get_travel_times()
         for i, travel_time_interval_dict in enumerate(travel_times):
@@ -415,7 +415,7 @@ class TravelTimeManagerDialog(QDialog):
         self.times_table.setColumnWidth(2, 200)
         self.times_table.setColumnWidth(1, 120)
 
-    def get_button_stylesheet(self):
+    def get_button_stylesheet(self) -> str:
         return """
         QPushButton {
             background-color: #4CAF50;
@@ -431,19 +431,19 @@ class TravelTimeManagerDialog(QDialog):
         }
         """
 
-    def delete_time_interval(self, index):
+    def delete_time_interval(self, index) -> None:
         self.parent.config_manager.remove_travel_time(index)
         self.update_times_table()
 
-    def edit_time_interval_dialog(self, index):
+    def edit_time_interval_dialog(self, index) -> None:
         dialog = AddEditTimeIntervalDialog(self, index)
         dialog.exec()
 
-    def add_time_interval(self):
+    def add_time_interval(self) -> None:
         dialog = AddEditTimeIntervalDialog(self)
         dialog.exec()
 
-    def save_times(self):
+    def save_times(self) -> None:
         self.accept()
 
 
@@ -451,21 +451,21 @@ class AddEditTimeIntervalDialog(QDialog):
     def __init__(self, parent: TravelTimeManagerDialog, time_interval_index=None):
         self.parent: TravelTimeManagerDialog = parent
         super().__init__(parent)
-        self.time_interval_index = time_interval_index
+        self.time_interval_index: Optional[int] = time_interval_index
         self.setWindowTitle("Add/Edit Time Interval")
         self.setWindowIcon(qta.icon('fa.plus-circle'))
         self.setGeometry(200, 200, 400, 300)
-        self.layout = QVBoxLayout()
+        self.layout: QVBoxLayout = QVBoxLayout()
 
-        self.start_hour_spinbox = QSpinBox()
+        self.start_hour_spinbox: QSpinBox = QSpinBox()
         self.start_hour_spinbox.setRange(0, 24)
         self.start_hour_spinbox.setStyleSheet(self.get_spinbox_stylesheet())
 
-        self.end_hour_spinbox = QSpinBox()
+        self.end_hour_spinbox: QSpinBox = QSpinBox()
         self.end_hour_spinbox.setRange(0, 24)
         self.end_hour_spinbox.setStyleSheet(self.get_spinbox_stylesheet())
 
-        self.time_input = QSpinBox()
+        self.time_input: QSpinBox = QSpinBox()
         self.time_input.setRange(0, 1000)
         self.time_input.setStyleSheet(self.get_spinbox_stylesheet())
 
@@ -476,7 +476,7 @@ class AddEditTimeIntervalDialog(QDialog):
         self.layout.addWidget(QLabel("Travel time (mins)"))
         self.layout.addWidget(self.time_input)
 
-        self.save_button = QPushButton("Save")
+        self.save_button: QPushButton = QPushButton("Save")
         self.save_button.setIcon(qta.icon('fa.save', color='white'))
         self.save_button.setStyleSheet(self.get_button_stylesheet())
         self.save_button.clicked.connect(self.save_time_interval)
@@ -486,7 +486,7 @@ class AddEditTimeIntervalDialog(QDialog):
         if self.time_interval_index is not None:
             self.load_time_interval()
 
-    def get_spinbox_stylesheet(self):
+    def get_spinbox_stylesheet(self) -> str:
         return """
         QSpinBox {
             background-color: white; 
@@ -509,7 +509,7 @@ class AddEditTimeIntervalDialog(QDialog):
         }
         """
 
-    def get_button_stylesheet(self):
+    def get_button_stylesheet(self) -> str:
         return """
         QPushButton {
             background-color: #4CAF50;
@@ -529,7 +529,7 @@ class AddEditTimeIntervalDialog(QDialog):
         }
         """
 
-    def are_overlaps(self, start_hour, end_hour):
+    def are_overlaps(self, start_hour, end_hour) -> bool:
         travel_times = self.parent.parent.config_manager.get_travel_times()
         for i, time_interval in enumerate(travel_times):
             interval_start = time_interval['hourStart']
@@ -543,13 +543,13 @@ class AddEditTimeIntervalDialog(QDialog):
 
         return False
 
-    def load_time_interval(self):
+    def load_time_interval(self) -> None:
         time_interval = self.parent.parent.config_manager.get_travel_times()[self.time_interval_index]
         self.start_hour_spinbox.setValue(time_interval['hourStart'])
         self.end_hour_spinbox.setValue(time_interval['hourEnd'])
         self.time_input.setValue(time_interval['time'])
 
-    def save_time_interval(self):
+    def save_time_interval(self) -> None:
         start_hour = self.start_hour_spinbox.value()
         end_hour = self.end_hour_spinbox.value()
         time = self.time_input.value()
@@ -569,5 +569,3 @@ class AddEditTimeIntervalDialog(QDialog):
         self.parent.parent.config_manager.add_travel_time(time, start_hour, end_hour)
         self.parent.update_times_table()
         self.accept()
-
-

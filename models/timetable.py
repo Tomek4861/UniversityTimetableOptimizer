@@ -11,13 +11,13 @@ from models.meeting import Meeting
 class TimeTable:
     def __init__(self):
         self.schedule: dict[datetime, list[Meeting]] = {}
-        self.config = ConfigManager()
+        self.config: ConfigManager = ConfigManager()
         hours_in_day = 24
-        self.travel_times = {x: timedelta(minutes=0) for x in range(hours_in_day)}
+        self.travel_times: dict[int, timedelta] = {x: timedelta(minutes=0) for x in range(hours_in_day)}
         self.load_travel_times()
-        self.catalog_name = None
+        self.catalog_name: str = ''
 
-    def load_travel_times(self):
+    def load_travel_times(self) -> None:
         travel_config = self.config.get_travel_times()
         travel_config.sort(key=lambda x: x['hourStart'])
         for time_info in travel_config:
@@ -29,7 +29,7 @@ class TimeTable:
                     raise ValueError(f"Travel time {i} already set - probably overlapping times in config.json file.")
                 self.travel_times[i] = timedelta(minutes=time)
 
-    def add_meetings(self, meetings: list[Meeting]):
+    def add_meetings(self, meetings: list[Meeting]) -> None:
         for meet in meetings:
             meet_date = meet.get_date_without_time()
             if meet_date not in self.schedule:
@@ -37,7 +37,7 @@ class TimeTable:
             else:
                 self.schedule[meet_date].append(meet)
 
-    def sort_meetings(self):
+    def sort_meetings(self) -> None:
         for date in self.schedule:
             self.schedule[date].sort(key=lambda meet: meet.start_time)
 
@@ -71,7 +71,7 @@ class TimeTable:
             #       f"from {first_meet.start_time} to {last_meet.end_time}", self.schedule[date])
         return total_time
 
-    def to_dict(self):
+    def to_dict(self) -> dict[str, list[str]]:
         return {date.strftime('%d.%m.%Y'): [str(meet) for meet in meets] for date, meets in self.schedule.items()}
 
     def to_ui_format(self) -> List[Dict[str, Any]]:
@@ -96,15 +96,15 @@ class TimeTable:
 
         return weeks_but_as_list
 
-    def to_str_full(self):
+    def to_str_full(self) -> str:
         return json.dumps(self.to_dict(), indent=4, default=str, ensure_ascii=False)
 
-    def get_catalog_name(self):
+    def get_catalog_name(self) -> str:
         if not self.catalog_name:
             self.catalog_name = datetime.now().strftime("%d_%m_%Y_%H-%M-%S")
         return self.catalog_name
 
-    def save_plan(self, course_solution_dict: dict[(str, str, str), int]):
+    def save_plan(self, course_solution_dict: dict[(str, str, str), int]) -> None:
         # create catalog if not exists
         if not os.path.exists(f"Timetables/{self.get_catalog_name()}"):
             os.makedirs(f"Timetables/{self.get_catalog_name()}")

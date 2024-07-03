@@ -1,5 +1,3 @@
-from typing import Any
-
 import requests
 
 from config.config_manager import ConfigManager
@@ -17,8 +15,6 @@ class Scraper:
 
         params = dict(term_type='semester', active_only='true')
         response = self._session.get(f'{self.base_url}/terms/terms_index', params=params, timeout=15)
-        print(response.request.url)
-        print(response.json())
         return {term['id']: term['name']['en'] for term in response.json()}
 
     @staticmethod
@@ -33,12 +29,10 @@ class Scraper:
         params = dict(course_id=course_id, term_id=self.config.get_term(),
                       fields='course_id|course_name')
         response = self._session.get(f'{self.base_url}/courses/course_edition', params=params, timeout=15)
-        print(response.text)
         if response.json().get('course_id') == course_id.upper():
             return response.json()['course_name']['pl']
         else:
             return ''
-
 
     def get_course_info(self, course_id: str) -> list[Course]:
         course_list = []
