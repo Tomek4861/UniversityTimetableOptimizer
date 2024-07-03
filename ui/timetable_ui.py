@@ -19,8 +19,8 @@ class TimetableApp(QMainWindow):
         self.setWindowTitle(f"Timetable {window_id} - Fitness: {final_fitness}")
         self.setWindowIcon(qta.icon('fa.calendar'))
 
-        self.setGeometry(100, 100, 790, 770)
-        self.setMaximumWidth(790)
+        self.setGeometry(100, 100, 787, 770)
+        self.setMaximumWidth(787)
         self.colors: list[QColor] = [
             QColor(200, 200, 255),
             QColor(255, 200, 200),
@@ -137,6 +137,29 @@ class TimetableApp(QMainWindow):
         }
         QTableWidget::item {
             padding: 5px;
+        }
+        
+        QScrollBar:vertical {
+            background: #f0f0f0;
+            width: 16px;
+            margin: 16px 0 16px 0;
+        }
+        QScrollBar::handle:vertical {
+            background: #CCCCCC;
+            min-height: 20px;
+            border-radius: 5px;
+        }
+        QScrollBar::add-line:vertical {
+            background: #f0f0f0;
+            height: 16px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+        QScrollBar::sub-line:vertical {
+            background: #f0f0f0;
+            height: 16px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
         }
         """
 

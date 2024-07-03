@@ -112,7 +112,6 @@ class ConfigApp(QMainWindow):
             border: 1px solid #CCCCCC;
             border-radius: 5px;
             background-color: #ffffff;
-
         }
         QComboBox::drop-down {
             subcontrol-origin: padding;
@@ -129,7 +128,28 @@ class ConfigApp(QMainWindow):
             selection-background-color: #4CAF50;
             selection-color: white;
         }
-
+        QScrollBar:vertical {
+            background: #f0f0f0;
+            width: 16px;
+            margin: 16px 0 16px 0;
+        }
+        QScrollBar::handle:vertical {
+            background: #CCCCCC;
+            min-height: 20px;
+            border-radius: 5px;
+        }
+        QScrollBar::add-line:vertical {
+            background: #f0f0f0;
+            height: 16px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+        }
+        QScrollBar::sub-line:vertical {
+            background: #f0f0f0;
+            height: 16px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+        }
         """
 
     def update_course_table(self) -> None:
