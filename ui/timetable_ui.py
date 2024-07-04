@@ -10,7 +10,7 @@ from models.timetable import TimeTable
 
 
 class TimetableApp(QMainWindow):
-    def __init__(self, timetable_object: TimeTable, final_fitness: float, window_id:int):
+    def __init__(self, timetable_object: TimeTable, final_fitness, window_id):
         super().__init__()
         self.timetable: QTableWidget = QTableWidget()
         self.current_week_start: QDateTime = QDateTime.currentDateTime()

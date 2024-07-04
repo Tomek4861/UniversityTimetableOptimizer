@@ -128,4 +128,3 @@ class GAOptimizer(BaseOptimizer):
         # print(json.dumps(final_timetable.to_ui_format(), indent=4, default=str, ensure_ascii=False))
         print(self.course_manager.cache_hits, "cache hits")
         print(self.course_manager.calculate_possible_solutions(), "possible solutions")
-        return final_timetable

@@ -16,8 +16,8 @@ class GATester:
 
     def run_one_test(self, population_size, mutation_probability, crossover_probability, generations, elite_percentage):
         ga = GAOptimizer(population_size, mutation_probability, crossover_probability, generations, elite_percentage)
-        final_timetable = ga.run()
-        return ga.best_fitness
+        ga.run()
+        return ga.get_best_fitness()
 
     def run_tests(self):
         with ThreadPoolExecutor() as executor:
