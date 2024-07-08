@@ -39,6 +39,7 @@ class ConfigApp(QMainWindow):
         self.course_table.setColumnCount(3)
         self.course_table.setHorizontalHeaderLabels(["Course ID", "Course Name", "Actions"])
         self.course_table.horizontalHeader().setStretchLastSection(True)
+        self.course_table.horizontalHeader().setMinimumSectionSize(100)
         self.layout.addWidget(self.course_table)
 
         button_layout = QHBoxLayout()
@@ -196,6 +197,7 @@ class ConfigApp(QMainWindow):
 
         self.course_table.resizeColumnsToContents()
         self.course_table.setColumnWidth(2, 200)
+
 
     def get_button_stylesheet(self) -> str:
         return """
@@ -375,6 +377,7 @@ class TravelTimeManagerDialog(QDialog):
         self.times_table.setColumnCount(3)
         self.times_table.setHorizontalHeaderLabels(["Hours range", "Time (minutes)", "Actions"])
         self.times_table.horizontalHeader().setStretchLastSection(True)
+        self.times_table.horizontalHeader().setMinimumSectionSize(100)
         self.layout.addWidget(self.times_table)
 
         button_layout = QHBoxLayout()

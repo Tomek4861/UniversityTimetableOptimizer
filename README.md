@@ -84,9 +84,9 @@ UniversityTimetableOptimizer/
     python main.py
     ```
 
-2. Select correct semester.
+2. Select appropriate semester.
 3. Click `Add Course` and fill the Course ID.
-4. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. See [examples](#usage-example] for more details.
+4. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. See [examples](#usage-example) for more details.
 5. Repeat steps 3-4 for all courses you want to add.
 6. Click the `Edit Travel Times` button.
 7. Fill travel times for all time ranges. For most cases you can set one for whole day.
@@ -94,7 +94,7 @@ UniversityTimetableOptimizer/
 9. Click `Create Plan`.
 10. Wait for the timetable to be created - new window will pop up with the timetable.
 11. On the timetable window you can see the generated timetable week by week.
-12. You can click `Create Plan` button multiple times to make sure that the timetable is optimal (but in most cases it is).
+12. You can click `Create Plan` button multiple times to make sure that the timetable is optimal (although it usually is).
 ### Saving Timetable
 All files are being saved in project directory to `\Timetables\D_M_Y_H-M-S`. For example `\Timetables\08_07_2024_17-23-20`. 
 
