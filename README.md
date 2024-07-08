@@ -83,10 +83,10 @@ UniversityTimetableOptimizer/
     ```
 
 2. Select correct semester.
-3. Click `Add Course` and fill the Course Id.
-4. TUTUAJ SCREEN. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. Why to do that? Because sometimes some classes groups may be full, or you don't want lessons with certain lecturer. In such cases simply put those groups separated by comma in the blacklist field. See examples[LINK] for more details.
+3. Click `Add Course` and fill the Course ID.
+4. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. See [examples][(#usage-example] for more details.
 5. Repeat steps 3-4 for all courses you want to add.
-6. Click `Edit Travel Times.
+6. Click the `Edit Travel Times` button.
 7. Fill travel times for all time ranges. For most cases you can set one for whole day.
 8. Exit the travel times window.
 9. Click `Create Plan`.
@@ -104,11 +104,11 @@ You can find there:
 
 
 ## Usage Example
-1. After selecting semester, I add all courses required in the semester, so I copy from USOS all ids.
-2. Let's say that I'm lazy and I don't want to participate in any classed before 9:00. 
-So, using data from USOS I blacklist all groups from all courses that have classes before 9:00.
-3. Next I set travel times. Because I travel by car, I set higher times for peak hours.
-4. I click `Create Plan` and wait for the timetable to be generated.
+1. After selecting the semester, add all the required courses by copying their IDs from USOS.
+2. Assume that you prefer not to attend any classes before 9:00 AM. Using the data from USOS, blacklist all groups that have classes scheduled before 9:00 AM.
+3. Next, set the travel times. For example, if you travel by car, set longer travel times for peak hours.
+4. Click `Create Plan` and wait for the timetable to be generated.
+
 
 Using the blacklisting feature you can easily avoid classes with lecturers you don't like, or classes that are too early or too late for you.
 
