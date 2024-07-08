@@ -84,7 +84,7 @@ UniversityTimetableOptimizer/
 
 2. Select correct semester.
 3. Click `Add Course` and fill the Course ID.
-4. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. See [examples][(#usage-example] for more details.
+4. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. See [examples](#usage-example] for more details.
 5. Repeat steps 3-4 for all courses you want to add.
 6. Click the `Edit Travel Times` button.
 7. Fill travel times for all time ranges. For most cases you can set one for whole day.
@@ -105,9 +105,13 @@ You can find there:
 
 ## Usage Example
 1. After selecting the semester, add all the required courses by copying their IDs from USOS.
+![image](https://github.com/Tomek4861/UniversityTimetableOptimizer/assets/62472797/95621785-3b03-41cd-9cac-e244c562815e)
 2. Assume that you prefer not to attend any classes before 9:00 AM. Using the data from USOS, blacklist all groups that have classes scheduled before 9:00 AM.
+![image](https://github.com/Tomek4861/UniversityTimetableOptimizer/assets/62472797/c66cae8b-3d6f-4519-a8d8-eb70d3abc046)
 3. Next, set the travel times. For example, if you travel by car, set longer travel times for peak hours.
+![image](https://github.com/Tomek4861/UniversityTimetableOptimizer/assets/62472797/b6058619-1a34-4c4b-9549-f858c0c4abec)
 4. Click `Create Plan` and wait for the timetable to be generated.
+![image](https://github.com/Tomek4861/UniversityTimetableOptimizer/assets/62472797/1ece659f-9d2e-4417-91e1-161198f2d7a2)
 
 
 Using the blacklisting feature you can easily avoid classes with lecturers you don't like, or classes that are too early or too late for you.
