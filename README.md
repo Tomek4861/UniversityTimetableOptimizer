@@ -1,6 +1,6 @@
 # UniversityTimetableOptimizer
 
-UniversityTimetableOptimizer is a schedule optimization application using genetic algorithms and a graphical interface created with PyQt6.
+UniversityTimetableOptimizer is a schedule optimization application using genetic algorithms and GUI created with PyQt6.
 
 ## Table of Contents
 
