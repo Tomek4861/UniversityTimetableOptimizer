@@ -71,6 +71,8 @@ UniversityTimetableOptimizer/
 │   ├── launcher.py
 │   └── scraper.py
 ├── main.py
+├── README.md
+├── config.json
 └── requirements.txt
 
 ```
