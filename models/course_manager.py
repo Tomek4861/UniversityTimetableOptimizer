@@ -20,14 +20,15 @@ class CourseManager:
 
         for course_id in self.config.get_all_courses():
             self.courses.extend(self.scraper.get_course_info(course_id))
-
+        courses_to_remove = []
         for course in self.courses:
             if not course.groups:
-                print("Removing course", course.name, course.main_id, "because it has no groups")
-                self.courses.remove(course)
-
+                # print("Removing course", course.name, course.main_id, "because it has no groups")
+                courses_to_remove.append(course)
+        for course in courses_to_remove:
+            self.courses.remove(course)
         self.course_groups_dict = {course.main_id: course.get_group_ids() for course in self.courses}
-        pass
+
 
     def get_group_ids_for_course(self, course_id: str) -> list[int]:
         return self.course_groups_dict[course_id]

@@ -49,6 +49,7 @@ class Scraper:
                 raise ValueError(
                     f"Course {course_id} {course.name} has no groups - check if it takes place in selected term.")
             for group in groups:
+                group = int(group)  # fix for usos api being retarded and returning group number as float
                 meetings, class_type, lecturer_id = self.get_group_meetings_and_info(unit_id, group)
                 if not meetings:
                     continue
@@ -80,6 +81,9 @@ class Scraper:
         if not response.json():  # group has no meetings
             return [], "", 0
         class_type = response.json()[0]['classtype_name']['en']
-        lecturer_id = response.json()[0]['lecturer_ids'][0]
+        if lecturers_ids := response.json()[0]['lecturer_ids']:
+            lecturer_id = lecturers_ids[0]
+        else:
+            lecturer_id = -1
         return [{"start_time": meeting['start_time'], 'end_time': meeting['end_time']} for meeting in
                 response.json()], class_type, lecturer_id

@@ -47,6 +47,7 @@ class GAOptimizer(BaseOptimizer):
         self.iterations_without_improvement_stop_threshold: int = 20
         self.elite_size: int = int(population_size * elite_percentage / 100)
 
+
     def calculate_fitness_all(self) -> None:
         for individual in self.population:
             individual.set_fitness(self.course_manager.rate_solution(individual.solution))
