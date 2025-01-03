@@ -81,6 +81,7 @@ class ConfigManager:
 
     def save(self) -> None:
         with open(self.path, 'w', encoding='utf-8') as file:
+            self.config['courses'] = sorted(self.config['courses'], key=lambda x: x['id'])
             json.dump(self.config, file, indent=4)
 
     def set_term(self, term) -> None:

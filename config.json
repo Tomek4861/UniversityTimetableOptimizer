@@ -1,9 +1,24 @@
 {
-    "term": "2023/24-L",
-    "courses": [],
+    "term": "2024/25-Z",
+    "courses": [
+        {
+            "id": "W08IST-SI0001S",
+            "blacklistedGroups": {
+                "Lecture": [
+                    1
+                ],
+                "Classes": [],
+                "Laboratory": [],
+                "Project": [],
+                "Seminar": [
+                    2
+                ]
+            }
+        }
+    ],
     "travelTimes": [
         {
-            "time": 30,
+            "time": 60,
             "hourStart": 0,
             "hourEnd": 24
         }

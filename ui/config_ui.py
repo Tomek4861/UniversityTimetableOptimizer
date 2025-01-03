@@ -155,17 +155,20 @@ class ConfigApp(QMainWindow):
 
     def update_course_table(self) -> None:
         self.course_table.setRowCount(0)
-        courses = self.config_manager.get_all_courses()
+        courses_name_dict = {course_id: self.scraper.get_course_name_and_validate(course_id) for course_id in self.config_manager.get_all_courses()}
+        courses_name_dict = dict(sorted(courses_name_dict.items(), key=lambda x: x[1]))
 
-        for i, course_id in enumerate(courses):
+
+        for i, course_id in enumerate(courses_name_dict.keys()):
             self.course_table.insertRow(i)
             self.course_table.setRowHeight(i, 90)
             course_item = QTableWidgetItem(course_id)
             course_item.setFont(QFont('Arial', 16))
             course_item.setFlags(course_item.flags() & ~Qt.ItemFlag.ItemIsEditable)
             self.course_table.setItem(i, 0, course_item)
-            if not (course_name := self.scraper.get_course_name_and_validate(course_id)):
-                course_name = "Invalid Course"
+            # if not (course_name := self.scraper.get_course_name_and_validate(course_id)):
+            #     course_name = "Invalid Course"
+            course_name = courses_name_dict[course_id]
 
             name_item = QTableWidgetItem(course_name)
             name_item.setFont(QFont('Arial', 16))
@@ -174,6 +177,7 @@ class ConfigApp(QMainWindow):
             self.course_table.setItem(i, 1, name_item)
             actions_widget = QWidget()
             actions_layout = QHBoxLayout()
+
             actions_layout.setContentsMargins(0, 0, 0, 0)
             edit_button = QPushButton("Disable Class Groups")
 

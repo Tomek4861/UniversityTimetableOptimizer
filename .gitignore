@@ -163,3 +163,5 @@ cython_debug/
 
 
 OtherStuff/
+Timetables/
+t.json
