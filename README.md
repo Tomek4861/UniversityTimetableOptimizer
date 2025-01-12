@@ -1,6 +1,9 @@
-# UniversityTimetableOptimizer
+# University Timetable Optimizer
 
-UniversityTimetableOptimizer is a schedule optimization application using genetic algorithms and GUI created with PyQt6.
+University Timetable Optimizer is a Python application designed to help WUST university students optimize their weekly schedules.
+By utilizing genetic algorithms, the application generates the most efficient timetable, minimizing time spent on campus while accommodating individual preferences.
+The user-friendly interface, built with PyQt6, allows students to easily configure their preferences and view the generated timetable in a clear and intuitive way.
+
 
 ## Table of Contents
 
@@ -8,10 +11,14 @@ UniversityTimetableOptimizer is a schedule optimization application using geneti
 - [Installation](#installation)
 - [Running](#running)
 - [Project Structure](#project-structure)
+- [How It Works](#how-it-works)
 - [Instructions](#instructions)
 - [Usage Example](#usage-example)
+- [Limitations](#limitations)
 - [Contributions](#contributions)
 - [License](#license)
+
+
 
 ## Requirements
 
@@ -44,6 +51,8 @@ To run the application, follow these steps:
     python main.py
     ```
 
+
+
 ## Project Structure
 
 ```plaintext
@@ -62,6 +71,8 @@ UniversityTimetableOptimizer/
 │   ├── base_optimizer.py
 │   ├── ga_optimizer.py
 │   └── random_optimizer.py
+├── tests/
+│   └── test.py
 ├── ui/
 │   ├── __init__.py
 │   ├── config_ui.py
@@ -77,6 +88,18 @@ UniversityTimetableOptimizer/
 
 ```
 
+## How It Works
+
+University Timetable Optimizer uses genetic algorithms to generate an optimal schedule. The process involves:
+- **Population Initialization:** Creating an initial set of individuals based on the provided data, where each individual represents a possible timetable.
+- **Fitness Evaluation:** Evaluating a score for each individual based on the total time spent at the university for a given solution.
+- **Elitism:** Retaining the top 20 best individuals (timetables) to the next iteration unchanged.
+- **Crossover and Mutation:** Combining and mutating individuals to explore new possibilities and avoid local optima.
+- **Iteration**: Repeating the process for several generations to converge on the optimal solution.
+- **Stopping Condition:** Terminating the process when the maximum number of iterations is reached or the algorithm stagnates.
+
+The final output is a schedule that best meets your preferences and constraints.
+
 ## Instructions
 
 1. Run the application:
@@ -86,7 +109,7 @@ UniversityTimetableOptimizer/
 
 2. Select appropriate semester.
 3. Click `Add Course` and fill the Course ID.
-4. In the Dialog window you can blacklist groups - script will ignore them when creating a timetable. See [examples](#usage-example) for more details.
+4. In the Dialog window you can blacklist groups - the application will ignore them during timetable generation. See [Usage Example](#usage-example) for more details.
 5. Repeat steps 3-4 for all courses you want to add.
 6. Click the `Edit Travel Times` button.
 7. Fill travel times for all time ranges. For most cases you can set one for whole day.
@@ -101,7 +124,7 @@ All files are being saved in project directory to `\Timetables\D_M_Y_H-M-S`. For
 You can find there:
 - `timetable.json` - JSON file containing whole generated timetable day by day.
 - `groups.csv` - CSV file containing selected groups for each course.
-- Optionally you can save week schedule as an `.png` image by clicking `Save Screenhost` button.
+- Optionally you can save week schedule as an `.png` image by clicking `Save Screenshot` button.
 
 
 
@@ -124,6 +147,11 @@ You can find there:
 
 
 Using the blacklisting feature you can easily avoid classes with lecturers you don't like, or classes that are too early or too late for you.
+
+## Limitations
+
+- The application is designed for students at the Wroclaw University of Science and Technology.
+- The application relies entirely on the USOS API, which may occasionally be unavailable.
 
 
 ## Contributions

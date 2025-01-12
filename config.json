@@ -16,6 +16,16 @@
         {
             "time": 60,
             "hourStart": 0,
+            "hourEnd": 10
+        },
+        {
+            "time": 600,
+            "hourStart": 10,
+            "hourEnd": 15
+        },
+        {
+            "time": 10,
+            "hourStart": 15,
             "hourEnd": 24
         }
     ]
