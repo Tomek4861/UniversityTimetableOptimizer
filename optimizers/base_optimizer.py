@@ -8,6 +8,8 @@ class BaseOptimizer(ABC):
     def __init__(self):
         self.course_manager: CourseManager = CourseManager()
         self.accepted_values: list[list[int]] = list(self.course_manager.get_group_ids_for_all_courses().values())
+        if not self.accepted_values:
+            raise ValueError("No input courses found")
         self.best_solution: list[int] = []
         self.best_fitness: int = 0
 

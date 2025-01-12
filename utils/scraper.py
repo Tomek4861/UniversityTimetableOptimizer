@@ -69,7 +69,7 @@ class Scraper:
             # print(course)
 
     def get_groups(self, course_unit_id: int) -> list[int]:
-        "https://apps.usos.pwr.edu.pl/services/courses/course_unit?course_unit_id=62142&fields=id|homepage_url|profile_url|class_groups"
+        #  https://apps.usos.pwr.edu.pl/services/courses/course_unit?course_unit_id=62142&fields=id|homepage_url|profile_url|class_groups"
         params = dict(course_unit_id=course_unit_id, fields='id|homepage_url|profile_url|class_groups')
         response = self._session.get(f'{self.base_url}/courses/course_unit', params=params, timeout=15)
         return [group['number'] for group in response.json()['class_groups']]

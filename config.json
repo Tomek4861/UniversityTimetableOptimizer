@@ -2,17 +2,13 @@
     "term": "2024/25-Z",
     "courses": [
         {
-            "id": "W08IST-SI0001S",
+            "id": "W04IST-SI0827G",
             "blacklistedGroups": {
-                "Lecture": [
-                    1
-                ],
+                "Lecture": [],
                 "Classes": [],
                 "Laboratory": [],
                 "Project": [],
-                "Seminar": [
-                    2
-                ]
+                "Seminar": []
             }
         }
     ],

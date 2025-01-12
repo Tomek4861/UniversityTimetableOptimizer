@@ -71,7 +71,7 @@ class GAOptimizer(BaseOptimizer):
         self.population = sorted(self.population, key=lambda x: x.fitness, reverse=True)
 
     def run_iteration(self) -> bool:
-        "Returns true if improvement was made, false otherwise"
+        """Returns true if improvement was made, false otherwise"""
         new_population = []
         self.keep_elite(new_population)
         while len(new_population) < self.population_size:

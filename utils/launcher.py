@@ -21,6 +21,7 @@ def timetable_app_launcher(window_id: int):
     print(final_timetable.to_str_full())
     final_timetable.save_plan(best_solution_dict)
 
+
     app = QApplication(sys.argv + ['-platform', 'windows:darkmode=0'])
     window = TimetableApp(final_timetable, ga.best_fitness, window_id)
     window.show()

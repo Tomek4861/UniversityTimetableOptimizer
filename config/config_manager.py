@@ -7,13 +7,23 @@ class ConfigManager:
 
     def __new__(cls, *args, **kwargs):
         if not cls.__instance:
-            cls.__instance = super(ConfigManager, cls).__new__(cls)
+            cls.__instance = super(ConfigManager, cls, ).__new__(cls)
         return cls.__instance
 
-    def __init__(self):
+    def __init__(self, mock_up_config=None):
         self.path: str = self.deduct_path()
 
-        self.config: dict = self.read()
+        if not hasattr(self, 'initialized'):  # Read args only for the first initialization
+            self.path: str = self.deduct_path()
+
+            if mock_up_config:
+                self.config: dict = mock_up_config
+                self.test_mode = True
+            else:
+                self.config: dict = self.read()
+                self.test_mode = False
+
+            self.initialized = True  #
 
     def get_blacklisted_groups_for_course(self, course_name):
         for course in self.config['courses']:
@@ -33,8 +43,6 @@ class ConfigManager:
         with open(self.path, 'r', encoding='utf-8') as file:
             return json.load(file)
 
-    def get_key(self, key) -> any:
-        return self.config[key]
 
     def get_blacklisted_groups(self, course_name, course_type) -> list[int]:
         for course in self.config['courses']:
@@ -45,7 +53,7 @@ class ConfigManager:
     def get_term(self) -> str:
         return self.config['term']
 
-    def set_blacklisted_groups_for_course(self, course_type, blacklisted_groups) -> None:
+    def set_blacklisted_groups_for_course_and_add_course(self, course_type, blacklisted_groups) -> None:
         for course in self.config['courses']:
             if course['id'] == course_type:
                 course['blacklistedGroups'] = blacklisted_groups
@@ -80,9 +88,10 @@ class ConfigManager:
         self.save()
 
     def save(self) -> None:
-        with open(self.path, 'w', encoding='utf-8') as file:
-            self.config['courses'] = sorted(self.config['courses'], key=lambda x: x['id'])
-            json.dump(self.config, file, indent=4)
+        if not self.test_mode:
+            with open(self.path, 'w', encoding='utf-8') as file:
+                self.config['courses'] = sorted(self.config['courses'], key=lambda x: x['id'])
+                json.dump(self.config, file, indent=4)
 
     def set_term(self, term) -> None:
         self.config['term'] = term

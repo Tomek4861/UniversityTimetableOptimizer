@@ -13,7 +13,7 @@ class Meeting:
         self.parent: object = parent
 
     def get_weekday(self) -> int:
-        "Returns 0 for Monday, 1 for Tuesday, etc."
+        """Returns 0 for Monday, 1 for Tuesday, etc."""
         return self.start_time.weekday()
 
     def get_start_time(self) -> str:

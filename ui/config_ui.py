@@ -259,7 +259,7 @@ class AddEditCourseDialog(QDialog):
     def __init__(self, parent: ConfigApp, course_id=None):
         super().__init__(parent)
         self.parent: ConfigApp = parent
-        self.course_id: Optional[str] = course_id
+        self.course_id = course_id
         self.setWindowTitle("Add/Edit Course")
         self.setWindowIcon(qta.icon('fa.edit'))
         self.setGeometry(150, 150, 400, 300)
@@ -359,7 +359,7 @@ class AddEditCourseDialog(QDialog):
             QMessageBox.warning(self, "Error", "Blacklisted groups must be a list of integers")
             return
         self.course_id = course_id
-        self.parent.config_manager.set_blacklisted_groups_for_course(course_id, blacklisted_groups)
+        self.parent.config_manager.set_blacklisted_groups_for_course_and_add_course(course_id, blacklisted_groups)
         self.parent.update_course_table()
         self.accept()
 
@@ -478,7 +478,7 @@ class AddEditTimeIntervalDialog(QDialog):
     def __init__(self, parent: TravelTimeManagerDialog, time_interval_index=None):
         self.parent: TravelTimeManagerDialog = parent
         super().__init__(parent)
-        self.time_interval_index: Optional[int] = time_interval_index
+        self.time_interval_index = time_interval_index
         self.setWindowTitle("Add/Edit Time Interval")
         self.setWindowIcon(qta.icon('fa.plus-circle'))
         self.setGeometry(200, 200, 400, 300)
