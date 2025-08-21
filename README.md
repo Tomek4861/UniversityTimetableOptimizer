@@ -5,19 +5,6 @@ By utilizing genetic algorithms, the application generates the most efficient ti
 The user-friendly interface, built with PyQt6, allows students to easily configure their preferences and view the generated timetable in a clear and intuitive way.
 
 
-## Table of Contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Running](#running)
-- [Project Structure](#project-structure)
-- [How It Works](#how-it-works)
-- [Instructions](#instructions)
-- [Usage Example](#usage-example)
-- [Limitations](#limitations)
-- [Contributions](#contributions)
-- [License](#license)
-
 
 
 ## Requirements
@@ -52,41 +39,6 @@ To run the application, follow these steps:
     ```
 
 
-
-## Project Structure
-
-```plaintext
-UniversityTimetableOptimizer/
-├── config/
-│   ├── __init__.py
-│   └── config_manager.py
-├── models/
-│   ├── __init__.py
-│   ├── course.py
-│   ├── course_manager.py
-│   ├── meeting.py
-│   └── timetable.py
-├── optimizers/
-│   ├── __init__.py
-│   ├── base_optimizer.py
-│   ├── ga_optimizer.py
-│   └── random_optimizer.py
-├── tests/
-│   └── test.py
-├── ui/
-│   ├── __init__.py
-│   ├── config_ui.py
-│   └── timetable_ui.py
-├── utils/
-│   ├── __init__.py
-│   ├── launcher.py
-│   └── scraper.py
-├── main.py
-├── README.md
-├── config.json
-└── requirements.txt
-
-```
 
 ## How It Works
 
@@ -152,6 +104,41 @@ Using the blacklisting feature you can easily avoid classes with lecturers you d
 
 - The application is designed for students at the Wroclaw University of Science and Technology.
 - The application relies entirely on the USOS API, which may occasionally be unavailable.
+
+## Project Structure
+
+```plaintext
+UniversityTimetableOptimizer/
+├── config/
+│   ├── __init__.py
+│   └── config_manager.py
+├── models/
+│   ├── __init__.py
+│   ├── course.py
+│   ├── course_manager.py
+│   ├── meeting.py
+│   └── timetable.py
+├── optimizers/
+│   ├── __init__.py
+│   ├── base_optimizer.py
+│   ├── ga_optimizer.py
+│   └── random_optimizer.py
+├── tests/
+│   └── test.py
+├── ui/
+│   ├── __init__.py
+│   ├── config_ui.py
+│   └── timetable_ui.py
+├── utils/
+│   ├── __init__.py
+│   ├── launcher.py
+│   └── scraper.py
+├── main.py
+├── README.md
+├── config.json
+└── requirements.txt
+
+```
 
 
 ## Contributions
